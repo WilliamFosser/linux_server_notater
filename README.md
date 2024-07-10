@@ -56,7 +56,17 @@ scp din_ssh_nøkkel.pub root@dittdomenenavn.no:/home/dittbrukernavn/.ssh/authori
 
 `chown -R dittbrukernavn:dittbrukernavn .ssh`
 
-### Lag en egen bruker for serveren
+**configurer SSH-serveren ved å åpne configurasjonsfilen**
+
+`sudo vim /etc/ssh/sshd_config`
+
+Sett `PermitRootLogin no` for å hindre SSH innlogging for root. Deaktiver passordinnlogging ved å sette `PasswordAuthentication no`.
+
+**Restart SSH-server**
+
+`sudo systemctl restart ssh`
+
+## Lag en egen bruker for serveren
 
 `useradd dittbrukernavn -m -s /bin/bash -c "admin user"`
 
@@ -69,7 +79,12 @@ scp din_ssh_nøkkel.pub root@dittdomenenavn.no:/home/dittbrukernavn/.ssh/authori
 `passwd dittbrukernavn `
 
 
-## Sikkerhet
+## Nettverkssikkerhet
+
+**Bare åpne porter hvis det er absolutt nødvendig!** Skjekk hvilke programmer som lytter på froskjellige porter med `ss -ltpn`. Fjern det du ikke trenger. IP 0.0.0.0 betyr at den lytter på innkommene forespørsler fra alle IP-adresser. 
+
+### Brannmur
+Bruk UFW for enkelt oppsett. 
 
 
 
